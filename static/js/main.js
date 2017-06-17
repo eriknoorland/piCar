@@ -10,7 +10,7 @@
   let socket;
 
   function initialise() {
-    socket = io.connect('192.168.178.12:8080');
+    socket = io.connect('picar.local:8080');
     bindEvents();
   }
 
