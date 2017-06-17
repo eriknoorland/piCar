@@ -1,3 +1,5 @@
+require('shelljs/global');
+
 var http = require('http');
 var express = require('express');
 var app = express();
@@ -22,6 +24,10 @@ io.on('connection', function(socket) {
     for(var key in state) {
       output[key].write(state[key]);
     }
+  });
+
+  socket.on('shutdownRequest', function() {
+    exec('sudo shutdown -h now');
   });
 });
 

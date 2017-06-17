@@ -5,6 +5,7 @@
   const backward = controller(document.getElementById('bController'), 'backward');
   const left = controller(document.getElementById('lController'), 'left');
   const right = controller(document.getElementById('rController'), 'right');
+  const shutdown = document.getElementById('shutdown');
 
   let state = {forward: 0, backward: 0, left: 0, right: 0};
   let socket;
@@ -20,6 +21,7 @@
     backward.element.addEventListener('change', onControllerChange);
     left.element.addEventListener('change', onControllerChange);
     right.element.addEventListener('change', onControllerChange);
+    shutdown.addEventListener('click', onShutdownClick);
   }
 
   function onSocketConnect() {
@@ -29,6 +31,10 @@
   function onControllerChange(event) {
     state[event.detail.property] = event.detail.value;
     socket.emit('stateChangeRequest', state);
+  }
+
+  function onShutdownClick() {
+    socket.emit('shutdownRequest');
   }
 
   window.onload = function() {
