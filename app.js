@@ -27,4 +27,9 @@ io.on('connection', function(socket) {
 
 statusLED.write(1);
 
+process.on('SIGINT', function() {
+  statusLED.writeSync(0);
+  process.exit();
+});
+
 module.exports = server;
