@@ -7,6 +7,7 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var Gpio = require('onoff').Gpio;
 
+var pwma = new Gpio(20, 'out');
 var statusLED = new Gpio(21, 'out');
 var output = {
   forward: new Gpio(14, 'out'),
@@ -31,9 +32,11 @@ io.on('connection', function(socket) {
   });
 });
 
+pwma.write(1);
 statusLED.write(1);
 
 process.on('SIGINT', function() {
+  pwma.writeSync(0);
   statusLED.writeSync(0);
   process.exit();
 });
