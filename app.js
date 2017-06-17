@@ -1,11 +1,11 @@
-const http = require('http');
-const express = require('express');
-const app = express();
-const server = http.createServer(app);
-const io = require('socket.io').listen(server);
-const Gpio = require('onoff').Gpio;
+var http = require('http');
+var express = require('express');
+var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+var Gpio = require('onoff').Gpio;
 
-let output = {
+var output = {
   forward: new Gpio(14, 'out'),
   backward: new Gpio(15, 'out'),
   left: new Gpio(17, 'out'),
@@ -18,7 +18,7 @@ io.on('connection', function(socket) {
   socket.emit('connected');
 
   socket.on('stateChangeRequest', function(state) {
-    for(let key in state) {
+    for(var key in state) {
       output[key].write(state[key]);
     }
 
