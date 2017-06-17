@@ -5,6 +5,7 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var Gpio = require('onoff').Gpio;
 
+var statusLED = new Gpio(21, 'out');
 var output = {
   forward: new Gpio(14, 'out'),
   backward: new Gpio(15, 'out'),
@@ -21,9 +22,9 @@ io.on('connection', function(socket) {
     for(var key in state) {
       output[key].write(state[key]);
     }
-
-    console.log(JSON.stringify(output));
   });
 });
+
+statusLED.write(1);
 
 module.exports = server;
