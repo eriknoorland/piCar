@@ -21,6 +21,7 @@ app.use('/', express.static(__dirname + '/static'));
 
 io.on('connection', function(socket) {
   socket.emit('connected');
+  statusLED.write(1);
 
   socket.on('stateChangeRequest', function(state) {
     for(var key in state) {
@@ -35,7 +36,6 @@ io.on('connection', function(socket) {
 
 pwma.write(1);
 pwmb.write(1);
-statusLED.write(1);
 
 process.on('SIGINT', function() {
   pwma.writeSync(0);
