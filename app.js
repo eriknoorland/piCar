@@ -23,8 +23,6 @@ io.on('connection', function(socket) {
   socket.emit('connected');
 
   socket.on('stateChangeRequest', function(state) {
-    console.log('stateChangeRequest', JSON.stringify(state, null, 2));
-
     for(var key in state) {
       output[key].write(state[key]);
     }
